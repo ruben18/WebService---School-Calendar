@@ -11,6 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'HomeController@index');
+
+Route::get('auth/login', 'Auth\LoginController@showLoginForm');
+Route::post('auth/login', 'Auth\LoginController@login');
+Route::get('auth/register', 'Auth\RegisterController@showRegistrationForm');
+Route::post('auth/register', 'Auth\RegisterController@register');
+
+Route::get('user/info','UserController@info');
+
+
+//API ROUTES
+Route::group(['prefix' => 'api/v1', 'middleware' => 'auth:api'], function () {
+    Route::post('api/auth/login', 'Auth\LoginController@login');
 });
