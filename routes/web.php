@@ -25,3 +25,7 @@ Route::get('user/info','UserController@info');
 Route::group(['prefix' => 'api/v1', 'middleware' => 'auth:api'], function () {
     Route::post('api/auth/login', 'Auth\LoginController@login');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
