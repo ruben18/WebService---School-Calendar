@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Taks extends Model
 {
     protected $fillable = [
-        'name', 'description', 'date', 'complete',
+        'name', 'description', 'date', 'complete','user_id',
     ];
 
     protected $hidden = [
