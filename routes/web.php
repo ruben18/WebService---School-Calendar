@@ -22,10 +22,9 @@ Route::get('user/info','UserController@info');
 
 
 //API ROUTES
-Route::group(['prefix' => 'api/v1', 'middleware' => 'auth:api'], function () {
-    Route::post('api/auth/login', 'Auth\LoginController@login');
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+
+    Route::get('home','HomeController@index');
 });
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');

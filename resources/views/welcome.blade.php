@@ -79,28 +79,10 @@
         </div>
 
         <div class="links">
-            <button id="dalhe">Dalhe</button>
             <a href="http://www.facebook.com/rubenskateordie">Facebook</a>
             <a href="https://github.com/ruben18">GitHub</a>
         </div>
     </div>
 </div>
-<script>
-    $('#dalhe').click(function () {
-        const data = {
-            name: 'Client Name',
-            redirect: 'http://example.com/callback'
-        };
-
-        this.$http.post('/oauth/clients', data)
-                .then(response => {
-            console.log(response.data);
-    })
-        .catch(response=> {
-            // List errors on response...
-        }
-        );
-    });
-</script>
 </body>
 </html>
