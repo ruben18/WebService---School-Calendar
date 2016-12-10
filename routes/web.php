@@ -22,9 +22,15 @@ Route::get('user/info','UserController@info');
 
 
 //API ROUTES
+<<<<<<< HEAD
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('home','HomeController@index');
 });
 
+=======
+Route::group(['prefix' => 'api/v1', 'middleware' => 'auth:api'], function () {
+    Route::post('api/auth/login', 'Auth\LoginController@login');
+});
+>>>>>>> parent of 5821403... Install passport, trying to see who it works.
