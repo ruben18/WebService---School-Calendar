@@ -21,7 +21,8 @@
                     Calendar WebService
                     <small><br/>
                         If you have some questions, talk to me!
-                        <a href="https://github.com/ruben18/WebService---School-Calendar">Github Page</a></small>
+                        <a href="https://github.com/ruben18/WebService---School-Calendar">Github Page</a>
+                    </small>
                 </h1> 
             </div>
         </div>
