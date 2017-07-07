@@ -18,22 +18,24 @@ function bd_insertTask($value, $date)
 }
 
 
-// obter últimas 100 linhas da tabela historico (ordem descendente)
-/*function bd_ObterHistorico()
+// get asll tasks
+function bd_selectTasks()
 {
 	$conn = @new mysqli($GLOBALS["bd_server"], $GLOBALS["bd_user"], $GLOBALS["bd_password"], $GLOBALS["bd_name"]);
-	if ($conn->connect_error) {
+	
+    if ($conn->connect_error) {
 		die("Connection failed: " . $conn->connect_error);
 	} 	
-	$sql = "SELECT * FROM `historico` ORDER BY `data` DESC LIMIT 100";
+    $sql = "SELECT * FROM `task`";
 	$cmd = $conn->prepare($sql);		
 	$cmd->execute();
 	$result = $cmd->get_result();
-	$array = $result->fetch_all(MYSQLI_ASSOC);
-	$conn->close();		
+    $array = $result->fetch_all(MYSQLI_ASSOC);
+	
+    $conn->close();		
 	return $array;
 }
-
+/*
 
 // obter última linha da tabela historico (valor atual)
 function bd_ObterValorAtual()

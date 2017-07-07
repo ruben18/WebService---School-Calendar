@@ -16,7 +16,7 @@
 	
 	//--- html:POST - verify the values sent  ------------------------
 	$DATA = json_decode(file_get_contents('php://input'), true);	
-	if (!isset($DATA['auth']) || !isset($DATA['key']) || !isset($DATA['value']) || !isset($DATA['date']))
+	if (!isset($DATA['auth']) || !isset($DATA['key']) )
 	{			
 		http_response_code(400);				
 		echo('{"error": "number of parameters!"}' . PHP_EOL);	
@@ -28,8 +28,6 @@
 	//--- html:POST - take the values sent  ----------------------------
 	$user_pwd = $DATA['auth'];
 	$user_key = $DATA['key'];
-	$user_value = $DATA['value'];
-	$user_date = $DATA['date'];
 	//------------------------------------------------------------------
 
 	
@@ -53,11 +51,11 @@
 	//------------------------------------------------------------------
 
 	
-	//--- Insert in database ----------------------------------
-	var_dump($status_insert = bd_insertTask($user_value, $user_date));
+	//--- Select all rows of task table ----------------------------------
+	$status_select = bd_selectTasks();
 
-	// verify if database updated
-	if (!$status_insert)
+	// verify if have rows in table
+	if (!$status_select)
 	{
 		http_response_code(404);					
 		echo('{"error": "not possible to update database."}' . PHP_EOL);				
@@ -65,14 +63,7 @@
 	}		
 	//------------------------------------------------------------------
 
-	
-	
-	
-	
-		
-		
 	//-------  Response for client  ------------------------------------
-	$json = array("status" => "OK ", "key" => $user_key, "value" => $user_value, "date" => $user_date);
-    echo(json_encode($json) . PHP_EOL);	
+	echo(json_encode($status_select));
 	//------------------------------------------------------------------	
 ?>
