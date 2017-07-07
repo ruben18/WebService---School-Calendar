@@ -35,23 +35,23 @@ function bd_selectTasks()
     $conn->close();		
 	return $array;
 }
-/*
 
-// obter última linha da tabela historico (valor atual)
-function bd_ObterValorAtual()
+// get a task by id
+function bd_getTask($id)
 {
 	$conn = @new mysqli($GLOBALS["bd_server"], $GLOBALS["bd_user"], $GLOBALS["bd_password"], $GLOBALS["bd_name"]);
-	if ($conn->connect_error) {
+    if ($conn->connect_error) {
 		die("Connection failed: " . $conn->connect_error);
-	} 
-	$sql = "SELECT `valor`, `data` FROM `historico` WHERE `data` = ( select max(`data`) from historico) LIMIT 1";
-	$cmd = $conn->prepare($sql);
+	} 	
+    $sql = "SELECT * FROM `task` WHERE id='".$id."'";
+	$cmd = $conn->prepare($sql);		
 	$cmd->execute();
-	$result =$cmd->get_result();
-	$first_row = $result->fetch_assoc();
-	$conn->close();		
-	return $first_row;	
-}*/
+	$result = $cmd->get_result();
+    $array = $result->fetch_all(MYSQLI_ASSOC);
+	
+    $conn->close();		
+	return $array;
+}
 
 
 ?>
