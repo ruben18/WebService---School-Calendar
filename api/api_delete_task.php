@@ -16,7 +16,7 @@
 	
 	//--- html:POST - verify the values sent  ------------------------
 	$DATA = json_decode(file_get_contents('php://input'), true);	
-	if (!isset($DATA['auth']) || !isset($DATA['key']) || !isset($DATA['value']) || !isset($DATA['date']))
+	if (!isset($DATA['auth']) || !isset($DATA['key']) || !isset($DATA['id']))
 	{			
 		http_response_code(400);				
 		echo('{"error": "number of parameters!"}' . PHP_EOL);	
@@ -28,8 +28,7 @@
 	//--- html:POST - take the values sent  ----------------------------
 	$user_pwd = $DATA['auth'];
 	$user_key = $DATA['key'];
-	$user_value = $DATA['value'];
-	$user_date = $DATA['date'];
+	$user_value = $DATA['id'];
 	//------------------------------------------------------------------
 
 	
@@ -43,7 +42,7 @@
 	//------------------------------------------------------------------
 
 	
-	//--- verify the key vale: "task" ---------------------------
+	//--- verify the key value: "task" ---------------------------
 	if ($user_key != "task")
 	{
 		http_response_code(400);					
@@ -53,26 +52,21 @@
 	//------------------------------------------------------------------
 
 	
-	//--- Insert in database ----------------------------------
-	$status_insert = bd_insertTask($user_value, $user_date);
+	//--- Delete task by id ----------------------------------
+	$status_task = bd_deleteTask($user_value);
 
-	// verify if database updated
-	if (!$status_insert)
+	// verify if row exist
+	if (!$status_task)
 	{
 		http_response_code(404);					
-		echo('{"error": "not possible to update database."}' . PHP_EOL);				
+		echo('{"error": "not possible to delete task."}' . PHP_EOL);				
 		exit();					
 	}		
 	//------------------------------------------------------------------
 
 	
-	
-	
-	
-		
-		
 	//-------  Response for client  ------------------------------------
-	$json = array("status" => "OK ", "key" => $user_key, "value" => $user_value, "date" => $user_date);
+    $json = array("status" => "OK", "key" => $user_key, "value" => $user_value, "action"=>"delete");
     echo(json_encode($json) . PHP_EOL);	
 	//------------------------------------------------------------------	
 ?>

@@ -53,5 +53,33 @@ function bd_getTask($id)
 	return $array;
 }
 
+//Delete task by id
+function bd_deleteTask($id)
+{
+	$conn = @new mysqli($GLOBALS["bd_server"], $GLOBALS["bd_user"], $GLOBALS["bd_password"], $GLOBALS["bd_name"]);
+    if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	} 	
+    $sql = "DELETE FROM `task` WHERE id='".$id."'";
+	$cmd = $conn->prepare($sql);	
+	$status = $cmd->execute();
+    
+    $conn->close();		
+	return $status;
+}
 
+//Update task by id
+function bd_updateTask($id, $value, $date)
+{
+    
+	$conn =@new mysqli($GLOBALS["bd_server"], $GLOBALS["bd_user"], $GLOBALS["bd_password"], $GLOBALS["bd_name"]);
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	} 
+	$sql = "UPDATE `task` SET `value`='".$value."', `date`='".$date."' WHERE id='".$id."'";	
+	$cmd = $conn->prepare($sql);	
+	$status = $cmd->execute();
+    $conn->close();		
+	return $status;
+}
 ?>

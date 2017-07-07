@@ -16,7 +16,7 @@
 	
 	//--- html:POST - verify the values sent  ------------------------
 	$DATA = json_decode(file_get_contents('php://input'), true);	
-	if (!isset($DATA['auth']) || !isset($DATA['key']) || !isset($DATA['value']) || !isset($DATA['date']))
+	if (!isset($DATA['auth']) || !isset($DATA['key']) || !isset($DATA['id']) || !isset($DATA['value']) || !isset($DATA['date']))
 	{			
 		http_response_code(400);				
 		echo('{"error": "number of parameters!"}' . PHP_EOL);	
@@ -28,6 +28,7 @@
 	//--- html:POST - take the values sent  ----------------------------
 	$user_pwd = $DATA['auth'];
 	$user_key = $DATA['key'];
+	$user_id = $DATA['id'];
 	$user_value = $DATA['value'];
 	$user_date = $DATA['date'];
 	//------------------------------------------------------------------
@@ -43,7 +44,7 @@
 	//------------------------------------------------------------------
 
 	
-	//--- verify the key vale: "task" ---------------------------
+	//--- verify the key value: "task" ---------------------------
 	if ($user_key != "task")
 	{
 		http_response_code(400);					
@@ -53,26 +54,21 @@
 	//------------------------------------------------------------------
 
 	
-	//--- Insert in database ----------------------------------
-	$status_insert = bd_insertTask($user_value, $user_date);
+	//--- Update task by id ----------------------------------
+	$status_task = bd_updateTask($user_id,$user_value,$user_date);
 
-	// verify if database updated
-	if (!$status_insert)
+	// verify if row exist
+	if (!$status_task)
 	{
 		http_response_code(404);					
-		echo('{"error": "not possible to update database."}' . PHP_EOL);				
+		echo('{"error": "not possible to update task."}' . PHP_EOL);				
 		exit();					
 	}		
 	//------------------------------------------------------------------
 
 	
-	
-	
-	
-		
-		
 	//-------  Response for client  ------------------------------------
-	$json = array("status" => "OK ", "key" => $user_key, "value" => $user_value, "date" => $user_date);
+    $json = array("status" => "OK ", "key" => $user_key, "value" => $user_value, "date" => $user_date, "id"=>$user_id, "action"=>"update");
     echo(json_encode($json) . PHP_EOL);	
 	//------------------------------------------------------------------	
 ?>
