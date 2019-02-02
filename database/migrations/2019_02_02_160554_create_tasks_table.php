@@ -17,7 +17,7 @@ class CreateTasksTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table>date('Date');
+            $table->date('Date');
             $table->string('description');
             $table->string('attach')->nullable();
             $table->timestamps();
