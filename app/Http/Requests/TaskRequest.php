@@ -24,8 +24,8 @@ class TaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'date'=>['required|date'],
-            'description'=>['required|max:150']
+            'date'=>"required|date",
+            'description'=>"required|max:150"
         ];
     }
 }
