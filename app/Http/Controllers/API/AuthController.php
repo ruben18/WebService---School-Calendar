@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Requests\UserSignUpRequest;
 use App\User;
 use function Couchbase\passthruDecoder;
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login(UserLoginRequest $request)
     {
         $user = User::whereEmail(request('username'))->first();
         if (!$user) {
@@ -73,4 +74,14 @@ class AuthController extends Controller
             'status' => 200
         ]);
     }
+
+    public function signUp(UserSignUpRequest $request)
+    {
+        User::create($request->all());
+
+        return response()->json([
+            'status' => 201
+        ],201);
+    }
+
 }
